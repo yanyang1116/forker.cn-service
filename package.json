@@ -5,6 +5,7 @@
 	"scripts": {
 		"husky:install": "husky install",
 		"husky:msg-install": "husky add .husky/commit-msg 'npx --no -- commitlint --edit \"$1\"'",
+		"husky:stage-install": "husky add .husky/pre-commit 'npm run lint:staged'",
 		"lint:staged": "lint-staged",
 		"prettier": "prettier --write"
 	},
@@ -32,7 +33,7 @@
 		"@types/koa-router": "^7.4.4",
 		"@types/koa2-cors": "^2.0.2",
 		"husky": "^8.0.1",
-		"lint-staged": "^12.4.2",
+		"lint-staged": "^13.0.3",
 		"prettier": "^2.6.2"
 	},
 	"dependencies": {

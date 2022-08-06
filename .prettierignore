@@ -1,0 +1,11 @@
+dist/
+.husky/
+node_modules/
+
+.DS_Store
+*.log
+
+.vscode
+.editorconfig
+.prettierignore
+*.lock
