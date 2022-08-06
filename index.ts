@@ -5,6 +5,10 @@ import chalk from 'chalk';
 import cors from 'koa2-cors';
 import compress from 'koa-compress';
 
+// 这里不能用别名，当 import 执行完之后，下文都可以用别名
+import alias from './utils/alias';
+alias();
+
 import appRoutes from '@controller/router';
 
 const app = new Koa();
