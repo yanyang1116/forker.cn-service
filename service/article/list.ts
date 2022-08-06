@@ -1,5 +1,7 @@
-export default (ctx: any) =>
-	new Promise((resolve, reject) => {
+// export default (ctx: any) =>
+export default () =>
+	// new Promise((resolve, reject) => {
+	new Promise((resolve) => {
 		resolve([
 			{
 				author: 'yy',

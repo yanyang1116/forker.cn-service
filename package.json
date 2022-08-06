@@ -8,7 +8,7 @@
 		"husky:stage-install": "husky add .husky/pre-commit 'npm run lint:staged'",
 		"lint:staged": "lint-staged",
 		"prettier": "prettier --write",
-		"tsc": "tsc ./index.ts"
+		"tsc": "tsc"
 	},
 	"lint-staged": {
 		"*.{js,jsx,ts,tsx}": [],
