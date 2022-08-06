@@ -5,16 +5,12 @@
  * 这样指定目录的编译，是不会读取这个配置文件内容的
  * 只有在针对整个项目的 tsc 或者 babel、webpack 等工具编译过程中才会起作用
  */
+
 {
-	/**
-	 * 这里 "build/"
-	 * 其实是不要编译的，但是就不能共享 typing 里的申明，所以这里要 includes 进来
-	 * ts 里的其他情况都是一样的原则
-	 */
-	"include": ["src/**/*", "build/**/*", "typing/**/*"],
+	// 即使排除了 node_modules，@types 下的文件仍然会有作用
+	"exclude": ["node_modules/**/*", "dist/**/*", "__test__/**/*", "build/**/*"],
 	"compilerOptions": {
 		"allowJs": true,
-		"jsx": "react-jsx",
 		/**
 		 * module 与 target 是成对存在
 		 * module -> 生成的代码采用什么模块系统来表述引用关系
@@ -28,8 +24,8 @@
 		 *
 		 * 这里要 CommonJS + ES5 ，因为最终文件要在 node 下运行
 		 */
-		// "module": "CommonJS",
-		// "target": "ES5",
+		"module": "CommonJS",
+		"target": "ES5",
 		/**
 		 * https://typescript.bootcss.com/module-resolution.html
 		 * https://www.typescriptlang.org/docs/handbook/module-resolution.html
@@ -58,13 +54,12 @@
 		 */
 		// "allowSyntheticDefaultImports": true,
 		"experimentalDecorators": true,
-		"lib": ["esnext", "DOM"],
+		"lib": ["esnext"],
 
 		// 下面这几个是保持良好习惯建议开启的，虽然实际使用中成本可能会很高
 		"strictNullChecks": true,
 		"noUnusedParameters": true,
 		"noUnusedLocals": false, // 是在开发时候调试成本太高了，关闭
 		"noImplicitAny": true
-	},
-	"exclude": ["node_modules"] // 即使排除了 node_modules，@types 下的文件仍然会有作用
+	}
 }

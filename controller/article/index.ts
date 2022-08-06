@@ -1,12 +1,11 @@
-import {
-	list,
-} from '../../service/article/index.js'
+import { list } from '../../service/article/index';
 
-import wrapRes from '../../../utils/responseFormat.js'
+import wrapRes from '../../utils/responseFormat';
+import Router from 'koa-router';
 
-export default router => {
+export default (router: Router) => {
 	router.get('/article/list', async (ctx, next) => {
-		let data = null;
+		let data: any = null;
 		try {
 			data = await list(ctx);
 		} catch (err) {
