@@ -4,7 +4,7 @@
 	"description": "forker.cn-service",
 	"scripts": {
 		"husky:install": "husky install",
-		"lint:msg": "commitlint --edit",
+		"husky:msg-install": "husky add .husky/commit-msg 'npx --no -- commitlint --edit \"$1\"'",
 		"lint:staged": "lint-staged",
 		"prettier": "prettier --write"
 	},
