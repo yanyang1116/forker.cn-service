@@ -12,5 +12,6 @@ export default () =>
 		'@middleware': path.join(__dirname, '../middleware/'),
 		'@service': path.join(__dirname, '../service/'),
 		'@utils': path.join(__dirname, '../utils/'),
+		'@config': path.join(__dirname, '../config/'),
 		'@': path.join(__dirname, '../'),
 	});

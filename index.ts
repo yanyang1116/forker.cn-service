@@ -10,6 +10,7 @@ import alias from './utils/alias';
 alias();
 
 import appRoutes from '@controller/router';
+import auth from '@middleware/auth';
 
 const app = new Koa();
 const router = new Router({ prefix: '/api' });
@@ -21,6 +22,7 @@ if (process.env.NODE_ENV === 'development')
 // 到时候开 ng 看下大小
 // app.use(compress());
 app.use(bodyParser());
+app.use(auth());
 app.use(router.routes());
 app.use(router.allowedMethods());
 

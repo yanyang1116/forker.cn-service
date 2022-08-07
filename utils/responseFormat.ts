@@ -1,4 +1,6 @@
-const wrapSuccess = (ctx: any, data: any = null) => {
+import type * as Koa from 'koa';
+
+const wrapSuccess = (ctx: Koa.ParameterizedContext, data: any = null) => {
 	ctx.status = 200;
 	ctx.body = {
 		value: data,
@@ -6,9 +8,15 @@ const wrapSuccess = (ctx: any, data: any = null) => {
 	};
 };
 
-const wrapFail = (ctx: any, err: any) => {
+const wrapFail = (ctx: Koa.ParameterizedContext, err: Error) => {
+	if (!err.message) {
+		ctx.status = 500;
+		return;
+	}
+	const _err = Number(err.message);
 	let message = '';
-	switch (err) {
+
+	switch (_err) {
 		case 406:
 			message = '请求内容类型不正确';
 			break;
@@ -17,13 +25,15 @@ const wrapFail = (ctx: any, err: any) => {
 			message = '无效请求';
 			break;
 
-		default:
+		case 500:
 			message = '服务器繁忙，请稍后再试';
+			break;
+
+		default:
+			message = err.message;
 	}
 	ctx.body = { message, success: false };
-	ctx.status =
-		typeof err === 'number' && (err as any).length === 3 ? err : 500;
-
+	ctx.status = 200;
 	ctx.app.emit('error', err, ctx);
 };
 

@@ -25,6 +25,7 @@
 			"@middleware/*": ["./middleware/*"],
 			"@service/*": ["./service/*"],
 			"@utils/*": ["./utils/*"],
+			"@config/*": ["./config/*"],
 			"@/*": ["./*"]
 		},
 		"allowJs": true,

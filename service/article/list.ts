@@ -28,7 +28,6 @@ export default async (ctx: Koa.ParameterizedContext) => {
 			nextPage,
 		};
 	} catch (err) {
-		// TODO 这个报错
-		throw '查询列表失败，请稍后重试';
+		throw new Error(err);
 	}
 };
