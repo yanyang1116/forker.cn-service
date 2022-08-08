@@ -16,13 +16,15 @@ export default async (ctx: Koa.ParameterizedContext) => {
 	if (!userName || !password) {
 		throw new Error('用户名或账号不能为空');
 	}
-	let user: any;
+	let user: IUser;
 
 	try {
 		await client.connect();
 		const db = client.db(dbName);
 		const collection = db.collection(collectionName);
-		user = (await collection.find({ userName }).toArray())[0];
+		user = (
+			await collection.find({ userName }).toArray()
+		)[0] as unknown as IUser;
 	} catch (err) {
 		throw new Error(err);
 	}

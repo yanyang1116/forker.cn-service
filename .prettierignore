@@ -1,5 +1,6 @@
 dist/
 .husky/
+static/
 node_modules/
 
 .DS_Store
@@ -9,3 +10,4 @@ node_modules/
 .editorconfig
 .prettierignore
 *.lock
+

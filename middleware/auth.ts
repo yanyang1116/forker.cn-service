@@ -26,7 +26,6 @@ export default () => async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
 		 * 目前，就单纯解一下
 		 */
 	} catch (err) {
-		console.log(err);
 		ctx.status = 401;
 		return;
 	}
