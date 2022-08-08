@@ -8,32 +8,24 @@ const wrapSuccess = (ctx: Koa.ParameterizedContext, data: any = null) => {
 	};
 };
 
-const wrapFail = (ctx: Koa.ParameterizedContext, err: Error) => {
-	if (!err.message) {
-		ctx.status = 500;
+const wrapFail = (ctx: Koa.ParameterizedContext, err: any) => {
+	// 200，可交互对处理
+	if (err.status === 200) {
+		ctx.body = { message: err.message, success: false };
+		ctx.status = 200;
 		return;
 	}
-	const _err = Number(err.message);
-	let message = '';
 
-	switch (_err) {
-		case 406:
-			message = '请求内容类型不正确';
-			break;
-
-		case 400:
-			message = '无效请求';
-			break;
-
-		case 500:
-			message = '服务器繁忙，请稍后再试';
-			break;
-
-		default:
-			message = err.message;
+	// 直接抛出状态码的处理
+	if (err.__proto__.status !== 500) {
+		ctx.status = err.__proto__.status;
+		return;
 	}
-	ctx.body = { message, success: false };
-	ctx.status = 200;
+
+	// 其他异常，这种就不需要让用户知道了，直接 err 把 stack 往下传，需要的话，可以记录 stack
+	ctx.status = 500;
+
+	// TODO，err log 其实还没做
 	ctx.app.emit('error', err, ctx);
 };
 
