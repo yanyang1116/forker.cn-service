@@ -14,7 +14,7 @@ export default async (ctx: Koa.ParameterizedContext) => {
 	password = password.trim();
 
 	if (!userName || !password) {
-		throw new Error('用户名或账号不能为空');
+		ctx.throw(200, '用户名或账号不能为空');
 	}
 	let user: IUser;
 
@@ -26,9 +26,9 @@ export default async (ctx: Koa.ParameterizedContext) => {
 			await collection.find({ userName }).toArray()
 		)[0] as unknown as IUser;
 	} catch (err) {
-		throw new Error(err);
+		ctx.throw(err);
 	}
-	if (!user || user.password !== password) throw new Error('用户信息不正确');
+	if (!user || user.password !== password) ctx.throw(200, '用户信息不正确');
 
 	/**
 	 * TODO，这个地方用的是一个 value 加密的

@@ -27,6 +27,6 @@ export default async (ctx: Koa.ParameterizedContext) => {
 			nextPage,
 		};
 	} catch (err) {
-		throw new Error(err);
+		ctx.throw(err);
 	}
 };

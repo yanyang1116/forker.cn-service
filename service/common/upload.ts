@@ -8,7 +8,7 @@ import crypto from 'crypto';
 export default async (ctx: Koa.ParameterizedContext) => {
 	// 这里 Koa ctx 没有 file 这个对象，是 multer 定义的
 	const { file } = ctx;
-	if (!file) throw new Error('400');
+	if (!file) ctx.throw(400);
 	let md5, suffix;
 	try {
 		const { buffer } = ctx?.file;
@@ -23,7 +23,7 @@ export default async (ctx: Koa.ParameterizedContext) => {
 			buffer
 		);
 	} catch (err) {
-		throw new Error(err);
+		ctx.throw(err);
 	}
 	return `${baseConfig.host}s/${md5}${suffix}`;
 };
