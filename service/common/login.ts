@@ -8,6 +8,8 @@ const client = new MongoClient(url);
 const dbName = 'blog';
 const collectionName = 'USER';
 
+let dbConnected = false;
+
 export default async (ctx: Koa.ParameterizedContext) => {
 	let { userName = '', password = '' } = ctx.request.body;
 	userName = userName.trim();
@@ -19,13 +21,18 @@ export default async (ctx: Koa.ParameterizedContext) => {
 	let user: IUser;
 
 	try {
-		await client.connect();
+		if (!dbConnected) {
+			await client.connect();
+			dbConnected = true;
+		}
 		const db = client.db(dbName);
 		const collection = db.collection(collectionName);
 		user = (
 			await collection.find({ userName }).toArray()
 		)[0] as unknown as IUser;
 	} catch (err) {
+		client.close();
+		dbConnected = false;
 		ctx.throw(err);
 	}
 	if (!user || user.password !== password) ctx.throw(200, '用户信息不正确');

@@ -1,7 +1,12 @@
 /**
  * @file
- * 修改每条数据的 _id -> id
+ * 此文件，修改 response、request 每条数据的 _id -> id
+ *
  * 目前只判断 Object 和 Array 对返回体
+ * 可能【确实存在效率】的问题，但是通过这个中间件，摸一下返回体拦截也不错
+ * 我的应用的使用场景【完全够用】了
+ *
+ * TODO，请求体的 id -> _id
  */
 import type * as Koa from 'koa';
 

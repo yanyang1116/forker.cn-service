@@ -6,10 +6,15 @@ const client = new MongoClient(url);
 const dbName = 'blog';
 const collectionName = 'LIST';
 
+let dbConnected = false;
+
 export default async (ctx: Koa.ParameterizedContext) => {
 	const { pageSize = 5, pageNum = 1 } = ctx.query;
 	try {
-		await client.connect();
+		if (!dbConnected) {
+			await client.connect();
+			dbConnected = true;
+		}
 		const db = client.db(dbName);
 		const collection = db.collection(collectionName);
 		const total =
@@ -28,6 +33,8 @@ export default async (ctx: Koa.ParameterizedContext) => {
 			nextPage,
 		};
 	} catch (err) {
+		client.close();
+		dbConnected = false;
 		ctx.throw(err);
 	}
 };
