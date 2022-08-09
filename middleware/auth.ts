@@ -22,7 +22,7 @@ export default () => async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
 		return next();
 	}
 	const token = ctx.request.header.authorization;
-	if (!token) {
+	if (token === null || token === undefined) {
 		ctx.status = 401;
 		return;
 	}

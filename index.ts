@@ -36,6 +36,20 @@ app.use(reqProxy(proxyConfig));
 // 到时候开 ng 看下大小
 // app.use(compress());
 
+/**
+ * 关于 bodyParser 对转化：
+ * 默认只对于 x-www-form-urlencoded 进行
+ * 如果请求是 form-data 类型，一般都是处理文件上传，使用 multer 进行
+ *
+ * 也可以用 formidable 这个中间件，但是 multer 好像不兼容，可能要额外排除文件上传的路由进行处理
+ * 所以，这里就记录一笔，只使用 x-www-form-urlencoded 这种方式
+ *
+ * 注意，这个中间件转化后，任何输入都是字符串，这个也是一般后端服务的通常做法：
+ * {
+ *		userName: 'null', null -> 'null'
+ *  	pwd: '123123' 123123 -> '123123'
+ * }
+ */
 app.use(bodyParser());
 app.use(auth());
 app.use(router.routes());
