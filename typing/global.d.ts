@@ -8,10 +8,14 @@
  * 所以这里使用 declare global 来处理
  */
 
+import type * as httpProxy from 'http-proxy';
 import { InferIdType } from 'mongodb';
 import { EnumArticleStatus } from './common';
 
 declare global {
+	interface IReqProxyOptions {
+		[props: string]: httpProxy.ServerOptions;
+	}
 	interface IUser {
 		_id: InferIdType<string>;
 		userName: string;

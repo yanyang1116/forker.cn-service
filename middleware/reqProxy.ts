@@ -1,0 +1,45 @@
+/**
+ * @file
+ * koa 代理拦截
+ */
+import type * as Koa from 'koa';
+import { createProxyMiddleware } from 'http-proxy-middleware';
+import k2c from 'koa2-connect';
+import { pathToRegexp } from 'path-to-regexp';
+
+/**
+ * 这个是代理的配置 demo
+ */
+// const options = {
+// 	targets: {
+// 		'/user': {
+// 			// this is option of http-proxy-middleware
+// 			target: 'http://localhost:3000', // target host
+// 			changeOrigin: true, // needed for virtual hosted sites
+// 		},
+// 		'/user/:id': {
+// 			target: 'http://localhost:3001',
+// 			changeOrigin: true,
+// 		},
+// 		// (.*) means anything
+// 		'/api/(.*)': {
+// 			target: 'http://10.94.123.123:1234',
+// 			changeOrigin: true,
+// 			pathRewrite: {
+// 				'/passager/xx': '/mPassenger/ee', // rewrite path
+// 			},
+// 		},
+// 	},
+// };
+
+export default (options: IReqProxyOptions = {}) =>
+	async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
+		const { path } = ctx;
+		for (let route of Object.keys(options)) {
+			console.log(pathToRegexp(route).test(path), 123);
+			if (pathToRegexp(route).test(path)) {
+				return k2c(createProxyMiddleware(options[route]))(ctx, next);
+			}
+		}
+		return next();
+	};

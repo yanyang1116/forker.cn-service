@@ -11,6 +11,12 @@ import authApis from '@config/authApis';
 
 export default () => async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
 	if (!authApis.includes(ctx.request.URL.pathname)) {
+		/**
+		 * 这个表示中间件对请求拦截做完了 return next()
+		 * ↑↑↑ 注意，这里一定要 return，不然不能 resolve 会报错的
+		 *
+		 * 如果是这样 await next() 则表示响应拦截
+		 */
 		return next();
 	}
 	const token = ctx.request.header.authorization;

@@ -5,14 +5,16 @@ import path from 'path';
 import chalk from 'chalk';
 import cors from 'koa2-cors';
 import compress from 'koa-compress';
-import koaStatic from 'koa-static';
-import mount from 'koa-mount';
+// import koaStatic from 'koa-static';
+// import mount from 'koa-mount';
 
 // 这里不能用别名，当 import 执行完之后，下文都可以用别名
 import alias from './utils/alias';
 alias();
 
 import appRoutes from '@controller/router';
+import proxyConfig from '@config/proxy';
+import reqProxy from '@middleware/reqProxy';
 import auth from '@middleware/auth';
 
 const app = new Koa();
@@ -22,11 +24,17 @@ appRoutes(router);
 if (process.env.NODE_ENV === 'development')
 	app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
 
-// 用这个插件，增加了一层 /s，才能访问到静态文件，主要为了结构方便管理
-app.use(mount('/s', koaStatic(path.join(__dirname, '../static'), {})));
+app.use(reqProxy(proxyConfig));
+
+/**
+ * 用这个插件，增加了一层 /s，才能访问到静态文件，主要为了结构方便管理
+ * mount 和 koa-static 也是非常常用的中间件，这个项目虽然没用，但是代码保留方便以后参考
+ */
+// app.use(mount('/s', koaStatic(path.join(__dirname, '../static'), {})));
 
 // 到时候开 ng 看下大小
 // app.use(compress());
+
 app.use(bodyParser());
 app.use(auth());
 app.use(router.routes());
