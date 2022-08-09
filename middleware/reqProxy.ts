@@ -36,7 +36,6 @@ export default (options: IReqProxyOptions = {}) =>
 	async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
 		const { path } = ctx;
 		for (let route of Object.keys(options)) {
-			console.log(pathToRegexp(route).test(path), 123);
 			if (pathToRegexp(route).test(path)) {
 				return k2c(createProxyMiddleware(options[route]))(ctx, next);
 			}

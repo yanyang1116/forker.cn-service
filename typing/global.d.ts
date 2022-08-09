@@ -13,6 +13,12 @@ import { InferIdType } from 'mongodb';
 import { EnumArticleStatus } from './common';
 
 declare global {
+	type IResponseBody<T> =
+		| undefined
+		| {
+				value: T;
+				success: boolean;
+		  };
 	interface IReqProxyOptions {
 		[props: string]: httpProxy.ServerOptions;
 	}
