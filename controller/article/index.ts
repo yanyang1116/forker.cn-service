@@ -4,7 +4,7 @@ import {
 	list,
 	trashList,
 	view,
-	// like,
+	like,
 	// status,
 	// submit,
 } from '@service/article/index';
@@ -15,6 +15,19 @@ export default (router: Router) => {
 		let data: any = null;
 		try {
 			data = await view(ctx);
+		} catch (err) {
+			wrapRes.wrapFail(ctx, err);
+			next();
+			return;
+		}
+		wrapRes.wrapSuccess(ctx, data);
+		next();
+	});
+
+	router.post('/article/like', async (ctx, next) => {
+		let data: any = null;
+		try {
+			data = await like(ctx);
 		} catch (err) {
 			wrapRes.wrapFail(ctx, err);
 			next();

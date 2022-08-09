@@ -26,7 +26,7 @@ export default async (ctx: Koa.ParameterizedContext) => {
 
 		if (item.length > 1) ctx.throw(400);
 		item = item[0];
-		await collection.updateOne({ id }, { $set: { views: item.views + 1 } });
+		await collection.updateOne({ id }, { $set: { likes: item.likes + 1 } });
 		return null;
 	} catch (err) {
 		client.close();

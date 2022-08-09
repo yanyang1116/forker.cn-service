@@ -1,3 +1,8 @@
+/**
+ * @file
+ * 登录 jwt 的签发和认证还是通过 _id 找用户会更合理
+ * 唯一性，数据库帮忙保证了
+ */
 import type * as Koa from 'koa';
 import { MongoClient } from 'mongodb';
 import jwt from 'jsonwebtoken';

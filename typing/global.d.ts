@@ -28,7 +28,6 @@ declare global {
 
 	interface IArticleItem {
 		id: string;
-		_id: InferIdType<string>;
 		title: string;
 		abstract: string;
 		createTime: number;

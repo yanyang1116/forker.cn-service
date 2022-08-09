@@ -18,3 +18,7 @@ ctx.request.body，会保证将用户输入，变成字符串：
 userName: 'null', null -> 'null'
 pwd: '123123' 123123 -> '123123'
 }
+
+todo: error log，这个完全不着急
+
+mongodb 数据库类型锁死
