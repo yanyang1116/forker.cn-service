@@ -1,43 +1,14 @@
 /**
  * @file
- * koa 代理拦截
+ * 去除缓存，这个可以暂时不用
+ * TODO，可以看一下，是否以 ng 为主要收口 —— 应该不是，ng 只是转发过来，具体还是以我的内容为主
  */
-/**
- * 这个是代理的配置 demo
- */
-// const options = {
-// 	targets: {
-// 		'/user': {
-// 			// this is option of http-proxy-middleware
-// 			target: 'http://localhost:3000', // target host
-// 			changeOrigin: true, // needed for virtual hosted sites
-// 		},
-// 		'/user/:id': {
-// 			target: 'http://localhost:3001',
-// 			changeOrigin: true,
-// 		},
-// 		// (.*) means anything
-// 		'/api/(.*)': {
-// 			target: 'http://10.94.123.123:1234',
-// 			changeOrigin: true,
-// 			pathRewrite: {
-// 				'/passager/xx': '/mPassenger/ee', // rewrite path
-// 			},
-// 		},
-// 	},
-// };
 
-export default (
-		options: {
-			[props: string]: httpProxy.ServerOptions;
-		} = {}
-	) =>
-	async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
-		const { path } = ctx;
-		for (let route of Object.keys(options)) {
-			if (pathToRegexp(route).test(path)) {
-				return k2c(createProxyMiddleware(options[route]))(ctx, next);
-			}
-		}
-		return next();
-	};
+import type * as Koa from 'koa';
+
+export default () => async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
+	await next();
+	ctx.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+	ctx.set('Pragma', 'no-cache');
+	ctx.set('Expires', '0');
+};
