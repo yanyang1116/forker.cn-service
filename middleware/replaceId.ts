@@ -1,6 +1,12 @@
 /**
  * @file
- * 修改 response、request 每条数据的 _id -> id，id -> _id
+ * 此中间件废弃，因为使用过程中发现，还是使用 mongo 的 _id 用于查询太麻烦了
+ * 但是这个中间件对书写过程是值得一看的，算是一个备份吧
+ */
+
+/**
+ * @file
+ * 修改 response 每条数据的 _id -> id
  * 这个中间件，展示了如【何既拦截请求，又拦截返回】
  *
  * 关于返回拦截：
@@ -8,6 +14,7 @@
  * 可能【确实存在效率】的问题，但是通过这个中间件，摸一下返回体拦截也不错
  * 我的应用的使用场景【完全够用】了
  *
+ * ↓↓↓ 请求拦截转化 id，这个太麻烦了、不实用，注释掉了，功能是可以用的，还是在具体的业务逻辑里取根据 id 查询吧
  * 关于请求拦截：
  * 只针对 query、body 中的对象、数组进行处理
  *
@@ -26,9 +33,8 @@ export default () =>
 		>,
 		next: Koa.Next
 	) => {
-		if (Object.keys(ctx.query).length) deep(ctx.query, true);
-
-		if (Object.keys(ctx.request.body).length) deep(ctx.request.body, true);
+		// if (Object.keys(ctx.query).length) deep(ctx.query, true);
+		// if (Object.keys(ctx.request.body).length) deep(ctx.request.body, true);
 
 		// 这个中间件，展示了如何既拦截请求，又拦截返回
 		await next();
