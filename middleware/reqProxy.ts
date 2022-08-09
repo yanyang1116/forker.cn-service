@@ -3,6 +3,7 @@
  * koa 代理拦截
  */
 import type * as Koa from 'koa';
+import type * as httpProxy from 'http-proxy';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import k2c from 'koa2-connect';
 import { pathToRegexp } from 'path-to-regexp';
@@ -32,7 +33,11 @@ import { pathToRegexp } from 'path-to-regexp';
 // 	},
 // };
 
-export default (options: IReqProxyOptions = {}) =>
+export default (
+		options: {
+			[props: string]: httpProxy.ServerOptions;
+		} = {}
+	) =>
 	async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
 		const { path } = ctx;
 		for (let route of Object.keys(options)) {

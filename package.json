@@ -30,6 +30,7 @@
 	"devDependencies": {
 		"@commitlint/cli": "^17.0.1",
 		"@commitlint/config-conventional": "^17.0.0",
+		"@types/fs-extra": "^9.0.13",
 		"@types/jsonwebtoken": "^8.5.8",
 		"@types/koa-bodyparser": "^4.3.7",
 		"@types/koa-compress": "^4.0.3",
@@ -38,6 +39,7 @@
 		"@types/koa-static": "^4.0.2",
 		"@types/koa2-cors": "^2.0.2",
 		"@types/module-alias": "^2.0.1",
+		"@types/shelljs": "^0.8.11",
 		"husky": "^8.0.1",
 		"lint-staged": "^13.0.3",
 		"nodemon": "^2.0.19",
@@ -48,6 +50,7 @@
 		"@koa/multer": "^3.0.0",
 		"chalk": "4",
 		"crypto": "^1.0.1",
+		"fs-extra": "^10.1.0",
 		"http-proxy-middleware": "^2.0.6",
 		"jsonwebtoken": "^8.5.1",
 		"koa": "^2.13.4",
@@ -61,6 +64,7 @@
 		"module-alias": "^2.2.2",
 		"mongodb": "^4.8.1",
 		"multer": "^1.4.5-lts.1",
-		"path-to-regexp": "^6.2.1"
+		"path-to-regexp": "^6.2.1",
+		"shelljs": "^0.8.5"
 	}
 }

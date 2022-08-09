@@ -1,14 +1,13 @@
 /**
  * @file
+ * 此文件用户向所有项目文件暴露全局声明
+ *
  * 单纯的 declare 也是可以将类型定义声明到全局
  * 但是，如果不是 declare 开头，就不能起作用
- *
  * 就像我这里要使用 import EnumArticleStatus 就不行
- *
  * 所以这里使用 declare global 来处理
  */
 
-import type * as httpProxy from 'http-proxy';
 import { InferIdType } from 'mongodb';
 import { EnumArticleStatus } from './common';
 
@@ -19,9 +18,7 @@ declare global {
 				value: T;
 				success: boolean;
 		  };
-	interface IReqProxyOptions {
-		[props: string]: httpProxy.ServerOptions;
-	}
+
 	interface IUser {
 		_id: InferIdType<string>;
 		userName: string;
