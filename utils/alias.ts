@@ -11,6 +11,7 @@ export default () =>
 		'@controller': path.join(__dirname, '../controller/'),
 		'@middleware': path.join(__dirname, '../middleware/'),
 		'@service': path.join(__dirname, '../service/'),
+		'@typing': path.join(__dirname, '../typing/'),
 		'@utils': path.join(__dirname, '../utils/'),
 		'@config': path.join(__dirname, '../config/'),
 		'@': path.join(__dirname, '../'),

@@ -27,3 +27,17 @@ dockerfile 自己的镜像
 
 权限系统:
 设计一个借口返回权限列表，服务端暂时不做接口层面的校验 (TODO)
+
+## 记一笔
+
+koa 上下文中 ctx.throw，是可以被下文 catch 到的
+详情见 login.ts
+
+try {
+ctx.throw('数据重复')
+} catch (err) {
+client.close();
+dbConnected = false;
+// 一样，抛出错误，这里就会 500
+ctx.throw(err);
+}

@@ -25,7 +25,7 @@ export default async (ctx: Koa.ParameterizedContext) => {
 	if (!userName || !password) {
 		ctx.throw(200, '用户名或账号不能为空');
 	}
-	let user: IUser;
+	let user: IUser | IUser[];
 
 	try {
 		if (!dbConnected) {
@@ -34,9 +34,11 @@ export default async (ctx: Koa.ParameterizedContext) => {
 		}
 		const db = client.db(dbName);
 		const collection = db.collection(collectionName);
-		user = (
-			await collection.find({ userName }).toArray()
-		)[0] as unknown as IUser;
+		user = (await collection
+			.find({ userName })
+			.toArray()) as unknown as IUser[];
+		if (user.length > 1) ctx.throw('数据重复'); // 放心，这里 ctx.throw 是可以被下文捕捉到的，这里会 500
+		user = user[0];
 	} catch (err) {
 		client.close();
 		dbConnected = false;

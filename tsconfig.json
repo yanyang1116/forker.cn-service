@@ -24,6 +24,7 @@
 			"@controller/*": ["./controller/*"],
 			"@middleware/*": ["./middleware/*"],
 			"@service/*": ["./service/*"],
+			"@typing/*": ["./typing/*"],
 			"@utils/*": ["./utils/*"],
 			"@config/*": ["./config/*"],
 			"@/*": ["./*"]

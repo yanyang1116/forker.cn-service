@@ -8,7 +8,7 @@ import { MongoClient } from 'mongodb';
 import { customAlphabet } from 'nanoid';
 
 import baseConfig from '@config/base';
-import { EnumArticleStatus } from '@/typing/global';
+import { EnumArticleStatus } from '@typing/enum';
 
 const url = baseConfig.mongoHost;
 const client = new MongoClient(url);

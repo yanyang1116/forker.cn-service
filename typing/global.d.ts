@@ -9,7 +9,7 @@
  */
 
 import { InferIdType } from 'mongodb';
-
+import { EnumArticleStatus } from '@typing/enum';
 declare global {
 	type IResponseBody<T> =
 		| undefined
@@ -38,10 +38,4 @@ declare global {
 		views: number;
 		likes: number;
 	}
-}
-
-export enum EnumArticleStatus {
-	Draft,
-	Publish,
-	Trash,
 }
