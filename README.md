@@ -21,6 +21,6 @@ pwd: '123123' 123123 -> '123123'
 
 todo: error log，这个完全不着急
 
-todo: mongodb 数据库类型锁死
-
-todo: pv、post 文章接口
+检查代码
+shell 脚本 docker 放一个
+dockerfile 自己的镜像

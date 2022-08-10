@@ -31,7 +31,7 @@ export default async (ctx: Koa.ParameterizedContext) => {
 		item = item[0];
 		await collection.updateOne(
 			{ id },
-			{ $set: { status: Number(status) } }
+			{ $set: { status: Number(status), modifyTime: +new Date() } }
 		);
 		return null;
 	} catch (err) {

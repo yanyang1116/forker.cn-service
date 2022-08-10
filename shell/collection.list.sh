@@ -21,10 +21,10 @@ db.createCollection(collection, {
             description: "id must be a string and is required"
          },
          createTime: {
-            bsonType: "timestamp",
+            bsonType: "number",
          },
          modifyTime: {
-            bsonType: "timestamp",
+            bsonType: "number",
          },
          title: {
            bsonType: "string",
@@ -59,8 +59,8 @@ db[collection].insertOne({
   id: "test123123",
   title: "测试",
   abstract: "测试abstract",
-  createTime: new Timestamp(),
-  modifyTime: new Timestamp(),
+  createTime: +new Date(),
+  modifyTime: +new Date(),
   author: "yy",
   original: true,
   tags: [
