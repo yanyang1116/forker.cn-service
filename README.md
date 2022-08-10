@@ -24,3 +24,6 @@ todo: error log，这个完全不着急
 检查代码
 shell 脚本 docker 放一个
 dockerfile 自己的镜像
+
+权限系统:
+设计一个借口返回权限列表，服务端暂时不做接口层面的校验 (TODO)

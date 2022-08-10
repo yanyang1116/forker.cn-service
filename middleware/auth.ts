@@ -22,7 +22,7 @@ export default () => async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
 		return next();
 	}
 	const token = ctx.request.header.authorization;
-	if (token === null || token === undefined) {
+	if (!token) {
 		ctx.status = 401;
 		return;
 	}
@@ -32,6 +32,7 @@ export default () => async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
 		/**
 		 * TODO，这里其实可以放到内存位置，这样具体的业务逻辑里就不用再定位一次用户了
 		 * 目前，就单纯解一下
+		 * 服务端的权限设计，这里其实也要考虑，可能要上 redis，目前先这样。权限由前端控制
 		 */
 	} catch (err) {
 		ctx.status = 401;

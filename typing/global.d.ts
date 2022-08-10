@@ -1,6 +1,6 @@
 /**
  * @file
- * 此文件用户向所有项目文件暴露全局声明
+ * 项目中暴露的全局声明
  *
  * 单纯的 declare 也是可以将类型定义声明到全局
  * 但是，如果不是 declare 开头，就不能起作用
@@ -9,7 +9,6 @@
  */
 
 import { InferIdType } from 'mongodb';
-import { EnumArticleStatus } from './common';
 
 declare global {
 	type IResponseBody<T> =
@@ -39,4 +38,10 @@ declare global {
 		views: number;
 		likes: number;
 	}
+}
+
+export enum EnumArticleStatus {
+	Draft,
+	Publish,
+	Trash,
 }

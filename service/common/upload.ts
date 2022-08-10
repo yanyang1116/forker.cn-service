@@ -1,5 +1,4 @@
 import type * as Koa from 'koa';
-import pathConfig from '@config/path';
 import docker from '@config/docker';
 import path from 'path';
 import shell from 'shelljs';
@@ -22,8 +21,8 @@ export default async (ctx: Koa.ParameterizedContext) => {
 		md5 = hash.digest('hex');
 		md5 = md5.substr(0, 12);
 
-		const locationPath = path.join(pathConfig.temp, `./${md5}${suffix}`);
-		fs.mkdirsSync(pathConfig.temp);
+		const locationPath = path.join(baseConfig.tempDir, `./${md5}${suffix}`);
+		fs.mkdirsSync(baseConfig.tempDir);
 		fs.writeFileSync(locationPath, buffer);
 		if (
 			shell.exec(

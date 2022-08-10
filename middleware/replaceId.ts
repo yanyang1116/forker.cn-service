@@ -22,67 +22,67 @@
  * 也就是说，这个应用内，都是用 _id 作为主键查询，但是对用户暴露、读写的时候是用的 id
  * 这个中间件就是转化对作用
  */
-import type * as Koa from 'koa';
+// import type * as Koa from 'koa';
 
-export default () =>
-	async (
-		ctx: Koa.ParameterizedContext<
-			Koa.DefaultState,
-			Koa.DefaultContext,
-			IResponseBody<any>
-		>,
-		next: Koa.Next
-	) => {
-		// if (Object.keys(ctx.query).length) deep(ctx.query, true);
-		// if (Object.keys(ctx.request.body).length) deep(ctx.request.body, true);
+// export default () =>
+// 	async (
+// 		ctx: Koa.ParameterizedContext<
+// 			Koa.DefaultState,
+// 			Koa.DefaultContext,
+// 			IResponseBody<any>
+// 		>,
+// 		next: Koa.Next
+// 	) => {
+// 		// if (Object.keys(ctx.query).length) deep(ctx.query, true);
+// 		// if (Object.keys(ctx.request.body).length) deep(ctx.request.body, true);
 
-		// 这个中间件，展示了如何既拦截请求，又拦截返回
-		await next();
+// 		// 这个中间件，展示了如何既拦截请求，又拦截返回
+// 		await next();
 
-		if (!ctx.response.body || typeof ctx.response.body.value !== 'object')
-			return;
+// 		if (!ctx.response.body || typeof ctx.response.body.value !== 'object')
+// 			return;
 
-		function deep(value: any, reverse: boolean) {
-			// 退出条件是，当前 value 不是 array 或者 object
-			if (typeof value !== 'object') return;
-			if (Array.isArray(value)) {
-				// 数组继续 deep，mongo 的数据结构中，_id 不会存在数组上
-				value.forEach((item) => {
-					deep(item, reverse);
-				});
-			} else if (
-				Object.prototype.toString.call(value) === '[object Object]' &&
-				!reverse
-			) {
-				// 如果是对象，删除 _id，增加 id
-				if (
-					value._id &&
-					value._id.constructor.name === 'ObjectId' &&
-					(value.id === null || value.id == undefined)
-				) {
-					value.id = value._id;
-					delete value._id;
-				}
-				Object.keys(value).forEach((key) => {
-					deep(value[key], reverse);
-				});
-			} else if (
-				Object.prototype.toString.call(value) === '[object Object]' &&
-				reverse
-			) {
-				// 如果是对象，删除 _id，增加 id
-				if (
-					reverse &&
-					value.id &&
-					(value._id === null || value._id == undefined)
-				) {
-					value._id = value.id;
-					delete value.id;
-				}
-				Object.keys(value).forEach((key) => {
-					deep(value[key], reverse);
-				});
-			}
-		}
-		deep(ctx.response.body.value, false);
-	};
+// 		function deep(value: any, reverse: boolean) {
+// 			// 退出条件是，当前 value 不是 array 或者 object
+// 			if (typeof value !== 'object') return;
+// 			if (Array.isArray(value)) {
+// 				// 数组继续 deep，mongo 的数据结构中，_id 不会存在数组上
+// 				value.forEach((item) => {
+// 					deep(item, reverse);
+// 				});
+// 			} else if (
+// 				Object.prototype.toString.call(value) === '[object Object]' &&
+// 				!reverse
+// 			) {
+// 				// 如果是对象，删除 _id，增加 id
+// 				if (
+// 					value._id &&
+// 					value._id.constructor.name === 'ObjectId' &&
+// 					(value.id === null || value.id == undefined)
+// 				) {
+// 					value.id = value._id;
+// 					delete value._id;
+// 				}
+// 				Object.keys(value).forEach((key) => {
+// 					deep(value[key], reverse);
+// 				});
+// 			} else if (
+// 				Object.prototype.toString.call(value) === '[object Object]' &&
+// 				reverse
+// 			) {
+// 				// 如果是对象，删除 _id，增加 id
+// 				if (
+// 					reverse &&
+// 					value.id &&
+// 					(value._id === null || value._id == undefined)
+// 				) {
+// 					value._id = value.id;
+// 					delete value.id;
+// 				}
+// 				Object.keys(value).forEach((key) => {
+// 					deep(value[key], reverse);
+// 				});
+// 			}
+// 		}
+// 		deep(ctx.response.body.value, false);
+// 	};

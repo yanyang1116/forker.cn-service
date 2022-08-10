@@ -1,7 +1,14 @@
+/**
+ * @file
+ * 定义需要在应用内做转发的配置
+ */
+
+import dockerConfig from './docker';
+
 export default {
 	// 静态资源代理
 	'/s/(.*)': {
-		target: 'http://localhost:10010', // target host
+		target: dockerConfig.nginxStaticServiceHost, // target host
 		/**
 		 * 把请求头（request header）的中的 Host 变成 target URL
 		 * Tip: Set the option changeOrigin to true for name-based virtual hosted sites.
