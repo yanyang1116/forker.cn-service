@@ -6,7 +6,7 @@ import {
 	view,
 	like,
 	submit,
-	// status,
+	status,
 } from '@service/article/index';
 import wrapRes from '@utils/responseFormat';
 
@@ -28,6 +28,19 @@ export default (router: Router) => {
 		let data: any = null;
 		try {
 			data = await like(ctx);
+		} catch (err) {
+			wrapRes.wrapFail(ctx, err);
+			next();
+			return;
+		}
+		wrapRes.wrapSuccess(ctx, data);
+		next();
+	});
+
+	router.post('/article/status', async (ctx, next) => {
+		let data: any = null;
+		try {
+			data = await status(ctx);
 		} catch (err) {
 			wrapRes.wrapFail(ctx, err);
 			next();

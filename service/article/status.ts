@@ -11,8 +11,9 @@ const collectionName = 'LIST';
 let dbConnected = false;
 
 export default async (ctx: Koa.ParameterizedContext) => {
-	const { id } = ctx.request.body;
+	const { id, status } = ctx.request.body;
 	!id && ctx.throw(400);
+	!status && ctx.throw(400);
 
 	try {
 		if (!dbConnected) {
@@ -28,7 +29,10 @@ export default async (ctx: Koa.ParameterizedContext) => {
 
 		if (item.length > 1) ctx.throw(400);
 		item = item[0];
-		await collection.updateOne({ id }, { $set: { likes: item.likes + 1 } });
+		await collection.updateOne(
+			{ id },
+			{ $set: { status: Number(status) } }
+		);
 		return null;
 	} catch (err) {
 		client.close();

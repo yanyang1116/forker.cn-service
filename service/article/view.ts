@@ -12,7 +12,7 @@ let dbConnected = false;
 
 export default async (ctx: Koa.ParameterizedContext) => {
 	const { id } = ctx.request.body;
-	id ?? ctx.throw(400);
+	!id && ctx.throw(400);
 
 	try {
 		if (!dbConnected) {

@@ -19,8 +19,7 @@ export default async (ctx: Koa.ParameterizedContext) => {
 		}
 		const db = client.db(dbName);
 		const collection = db.collection(collectionName);
-		const total =
-			(await collection.find({ status: 2 }).toArray()).length ?? 0;
+		const total = (await collection.find({ status: 2 }).toArray()).length;
 		// 这里就直接全量查了，TODO，如何做好分页查询优化，这个到时候问问钱老板
 		const list = await collection
 			.find({ status: 2 })
