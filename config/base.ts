@@ -1,4 +1,5 @@
 export default {
+	mongoHost: 'mongodb://localhost:27017/',
 	host:
 		process.env.NODE_ENV === 'development' ? 'http://localhost:8899/' : '/',
 

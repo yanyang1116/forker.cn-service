@@ -5,8 +5,8 @@ import {
 	trashList,
 	view,
 	like,
+	submit,
 	// status,
-	// submit,
 } from '@service/article/index';
 import wrapRes from '@utils/responseFormat';
 
@@ -28,6 +28,19 @@ export default (router: Router) => {
 		let data: any = null;
 		try {
 			data = await like(ctx);
+		} catch (err) {
+			wrapRes.wrapFail(ctx, err);
+			next();
+			return;
+		}
+		wrapRes.wrapSuccess(ctx, data);
+		next();
+	});
+
+	router.post('/article/submit', async (ctx, next) => {
+		let data: any = null;
+		try {
+			data = await submit(ctx);
 		} catch (err) {
 			wrapRes.wrapFail(ctx, err);
 			next();

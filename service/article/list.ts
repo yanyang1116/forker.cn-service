@@ -1,7 +1,9 @@
 import type * as Koa from 'koa';
 import { MongoClient } from 'mongodb';
 
-const url = 'mongodb://localhost:27017/';
+import baseConfig from '@config/base';
+
+const url = baseConfig.mongoHost;
 const client = new MongoClient(url);
 const dbName = 'blog';
 const collectionName = 'LIST';

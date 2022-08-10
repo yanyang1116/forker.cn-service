@@ -11,7 +11,9 @@ import { MongoClient } from 'mongodb';
 import shell from 'shelljs';
 import https from 'https';
 
-const url = 'mongodb://localhost:27017/';
+import baseConfig from '@config/base';
+
+const url = baseConfig.mongoHost;
 const client = new MongoClient(url);
 const dbName = 'blog';
 const collectionName = 'PV';

@@ -8,7 +8,9 @@ import { MongoClient } from 'mongodb';
 import jwt from 'jsonwebtoken';
 import secretInfo from '@config/secret';
 
-const url = 'mongodb://localhost:27017/';
+import baseConfig from '@config/base';
+
+const url = baseConfig.mongoHost;
 const client = new MongoClient(url);
 const dbName = 'blog';
 const collectionName = 'USER';
