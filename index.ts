@@ -1,19 +1,23 @@
 import bodyParser from 'koa-bodyparser';
 import Router from 'koa-router';
 import Koa from 'koa';
-import path from 'path';
 import chalk from 'chalk';
 import cors from 'koa2-cors';
 import compress from 'koa-compress';
+
+// import path from 'path';
 // import koaStatic from 'koa-static';
 // import mount from 'koa-mount';
 
-// 这里不能用别名，当 import 执行完之后，下文都可以用别名
+/**
+ * 这里不能用别名，当 import 执行完之后，下文都可以用别名
+ * 这个包，修改了 node 原型关于 module 的解析，以此来实现运行时别名
+ */
 import alias from './utils/alias';
 alias();
 
 import appRoutes from '@controller/router';
-import proxyConfig from '@config/proxy';
+import proxyConfig, { corsOrigin as corsOriginConfig } from '@config/proxy';
 import reqProxy from '@middleware/reqProxy';
 import auth from '@middleware/auth';
 
@@ -21,8 +25,19 @@ const app = new Koa();
 const router = new Router({ prefix: '/api' });
 appRoutes(router);
 
-if (process.env.NODE_ENV === 'development')
-	app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
+// TODO，这个没试过，要和前端联调一下才能确认是否能工作
+app.use(
+	cors({
+		credentials: true,
+		origin(ctx: Koa.ParameterizedContext) {
+			if (corsOriginConfig.includes(ctx.host)) {
+				return true;
+			} else {
+				return false;
+			}
+		},
+	})
+);
 
 app.use(reqProxy(proxyConfig));
 

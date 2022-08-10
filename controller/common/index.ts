@@ -2,7 +2,7 @@ import Router from 'koa-router';
 
 import { login, upload, pv } from '@service/common/index';
 import wrapRes from '@utils/responseFormat';
-// TODO，这个包对声明文件会对 koa ctx 造成影响，我这里在 declarations.d.ts 里声明成了 any
+// @koa/multer 包的申明文件有 Koa 有冲突，我这里在 declarations.d.ts 里单独声明了，至于是否可以修复，之后可以研究 TODO
 import multer from '@koa/multer';
 
 const uploader = multer();
@@ -34,6 +34,7 @@ export default (router: Router) => {
 		next();
 	});
 
+	// upload 使用 multer 的重载方式和别的不同
 	router.post(
 		'/common/upload',
 		uploader.single('file'),
