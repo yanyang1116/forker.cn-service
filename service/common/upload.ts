@@ -30,7 +30,6 @@ export default async (ctx: Koa.ParameterizedContext) => {
 				`docker cp ${locationPath} ${docker.nginxName}:${docker.nginxContentDir}`
 			).code !== 0
 		) {
-			shell.echo('Error: Git commit failed');
 			ctx.throw(200, '文件处理执行失败');
 		}
 	} catch (err) {

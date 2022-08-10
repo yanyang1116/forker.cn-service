@@ -21,4 +21,6 @@ pwd: '123123' 123123 -> '123123'
 
 todo: error log，这个完全不着急
 
-mongodb 数据库类型锁死
+todo: mongodb 数据库类型锁死
+
+todo: pv、post 文章接口
