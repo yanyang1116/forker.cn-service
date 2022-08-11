@@ -51,7 +51,7 @@ app.use(reqProxy(proxyConfig));
 // app.use(compress());
 
 /**
- * 关于 bodyParser 对转化：
+ * 关于 bodyParser 的转化：
  * 默认只对于 x-www-form-urlencoded 进行
  * 如果请求是 form-data 类型，一般都是处理文件上传，使用 multer 进行
  *

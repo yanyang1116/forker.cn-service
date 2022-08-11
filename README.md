@@ -41,3 +41,5 @@ dbConnected = false;
 // 一样，抛出错误，这里就会 500
 ctx.throw(err);
 }
+
+nodejs io 阻塞的事情要验证一下

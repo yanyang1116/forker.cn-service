@@ -37,7 +37,8 @@ export default async (ctx: Koa.ParameterizedContext) => {
 		user = (await collection
 			.find({ userName })
 			.toArray()) as unknown as IUser[];
-		if (user.length > 1) ctx.throw('数据重复'); // 放心，这里 ctx.throw 是可以被下文捕捉到的，这里会 500
+		// 放心，这里 ctx.throw 是可以被下文捕捉到的，这里会 500
+		if (user.length > 1) ctx.throw('数据重复');
 		user = user[0];
 	} catch (err) {
 		client.close();

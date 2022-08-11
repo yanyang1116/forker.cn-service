@@ -9,7 +9,7 @@ const wrapSuccess = (ctx: Koa.ParameterizedContext, data: any = null) => {
 };
 
 const wrapFail = (ctx: Koa.ParameterizedContext, err: any) => {
-	// 200，可交互对处理
+	// 200，可交互的处理
 	if (err.status === 200) {
 		ctx.body = { message: err.message, success: false };
 		ctx.status = 200;
