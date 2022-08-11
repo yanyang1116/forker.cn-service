@@ -4,7 +4,7 @@
  * 主要是为了配合 umi 对 auth，想试一下
  */
 import type * as Koa from 'koa';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import jwt from 'jsonwebtoken';
 import secretInfo from '@config/secret';
 
@@ -19,9 +19,6 @@ let dbConnected = false;
 
 export default async (ctx: Koa.ParameterizedContext) => {
 	const token = ctx.request.header.authorization;
-
-	!token ?? ctx.throw(400);
-
 	let decoded;
 	try {
 		decoded = jwt.verify(token as string, secretInfo.value);
@@ -29,8 +26,6 @@ export default async (ctx: Koa.ParameterizedContext) => {
 		ctx.throw(400);
 	}
 	const _id = (decoded as any)._id;
-	console.log(_id);
-	debugger;
 	let user: IUser | IUser[];
 	try {
 		if (!dbConnected) {
@@ -39,10 +34,13 @@ export default async (ctx: Koa.ParameterizedContext) => {
 		}
 		const db = client.db(dbName);
 		const collection = db.collection(collectionName);
-		user = (await collection.find({ _id }).toArray()) as unknown as IUser[];
+		user = (await collection
+			.find({ _id: new ObjectId(_id) })
+			.toArray()) as unknown as IUser[];
 		// 放心，这里 ctx.throw 是可以被下文捕捉到的，这里会 500
 		if (user.length > 1) ctx.throw('数据重复');
 		user = user[0];
+		if (!user) ctx.throw(400);
 	} catch (err) {
 		client.close();
 		dbConnected = false;

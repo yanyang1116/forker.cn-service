@@ -9,6 +9,7 @@ import { customAlphabet } from 'nanoid';
 
 import baseConfig from '@config/base';
 import { EnumArticleStatus } from '@typing/enum';
+import auth from '@/utils/auth';
 
 const url = baseConfig.mongoHost;
 const client = new MongoClient(url);
@@ -22,6 +23,18 @@ let dbConnected = false;
 export default async (ctx: Koa.ParameterizedContext) => {
 	let { id, content, title, abstract, author, original, tags } =
 		ctx.request.body;
+	const token = ctx.request.header.authorization;
+
+	let enable;
+
+	try {
+		enable = await auth(token as string);
+	} catch (err) {
+		ctx.throw(err);
+	}
+
+	if (!enable) ctx.throw(401);
+
 	const create = !id;
 	if (create) id = nanoid();
 

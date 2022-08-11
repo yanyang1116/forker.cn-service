@@ -17,12 +17,15 @@ export default async (ctx: Koa.ParameterizedContext) => {
 
 	!id && ctx.throw(400);
 	!status && ctx.throw(400);
+	let enable;
 
-	// try {
-	// 	await auth(token);
-	// } catch (err) {
-	// 	ctx.throw(err);
-	// }
+	try {
+		enable = await auth(token as string);
+	} catch (err) {
+		ctx.throw(err);
+	}
+
+	if (!enable) ctx.throw(401);
 
 	try {
 		if (!dbConnected) {
