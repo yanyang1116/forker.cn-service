@@ -15,7 +15,7 @@ import fs from 'fs-extra';
 export default async (ctx: Koa.ParameterizedContext) => {
 	// 这里 Koa router ctx 没有 file 这个对象，是 multer 定义的
 	const { file } = ctx;
-	file ?? ctx.throw(400);
+	!file ?? ctx.throw(400);
 
 	let md5, suffix;
 	try {

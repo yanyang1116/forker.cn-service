@@ -32,7 +32,7 @@ export default async (ctx: Koa.ParameterizedContext) => {
 		ip = result.stdout.substr(start).trim();
 	} else {
 		ip = ctx.request.ip;
-		ip ?? ctx.throw(400);
+		!ip ?? ctx.throw(400);
 	}
 	return new Promise((resolve, reject) => {
 		https

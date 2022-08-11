@@ -24,6 +24,12 @@ declare global {
 		password: string;
 		admin: boolean;
 	}
+	interface IAuth {
+		edit: boolean;
+		delete: boolean;
+		view: boolean;
+		create: boolean;
+	}
 
 	interface IArticleItem {
 		id: string;
