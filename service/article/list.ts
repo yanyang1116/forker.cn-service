@@ -11,7 +11,10 @@ const collectionName = 'LIST';
 let dbConnected = false;
 
 export default async (ctx: Koa.ParameterizedContext) => {
-	const { pageSize = 5, pageNum = 1 } = ctx.query;
+	let { pageSize = 5, pageNum = 1 } = ctx.query;
+	pageSize = Number(pageSize);
+	pageNum = Number(pageNum);
+
 	try {
 		if (!dbConnected) {
 			await client.connect();
@@ -21,11 +24,10 @@ export default async (ctx: Koa.ParameterizedContext) => {
 		const collection = db.collection(collectionName);
 		const total = (await collection.find({ status: { $ne: 2 } }).toArray())
 			.length;
-		// 这里就直接全量查了，TODO，如何做好分页查询优化，这个到时候问问钱老板
 		const list = await collection
 			.find({ status: { $ne: 2 } })
-			.skip((pageSize as number) * ((pageNum as number) - 1))
-			.limit(pageSize as number)
+			.skip(pageSize * (pageNum - 1))
+			.limit(pageSize)
 			.toArray();
 		let nextPage = list.length === pageSize;
 		return {

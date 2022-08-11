@@ -66,6 +66,7 @@ export default async (ctx: Koa.ParameterizedContext) => {
 			const insertObj: Partial<IArticleItem> = {
 				modifyTime: current,
 			};
+			// 更新的时候 original、author 一定要一起传，一起配合
 			if (original) {
 				if (original === 'false') {
 					original = false;
@@ -78,6 +79,7 @@ export default async (ctx: Koa.ParameterizedContext) => {
 			}
 			title && (insertObj.title = title);
 			tags && (insertObj.tags = JSON.parse(tags));
+			// abstract 还是要有更新逻辑兜底
 			if (abstract) {
 				insertObj.abstract = abstract;
 			} else {

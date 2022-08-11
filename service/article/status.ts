@@ -27,7 +27,7 @@ export default async (ctx: Koa.ParameterizedContext) => {
 			.find({ id })
 			.toArray()) as unknown as IArticleItem[];
 
-		if (item.length > 1) ctx.throw(400);
+		if (item.length > 1) ctx.throw('数据重复');
 		item = item[0];
 		await collection.updateOne(
 			{ id },
