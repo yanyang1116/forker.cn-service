@@ -2,6 +2,7 @@ import type * as Koa from 'koa';
 import { MongoClient } from 'mongodb';
 
 import baseConfig from '@config/base';
+import auth from '@/utils/auth';
 
 const url = baseConfig.mongoHost;
 const client = new MongoClient(url);
@@ -12,8 +13,16 @@ let dbConnected = false;
 
 export default async (ctx: Koa.ParameterizedContext) => {
 	const { id, status } = ctx.request.body;
+	const token = ctx.request.header.authorization;
+
 	!id && ctx.throw(400);
 	!status && ctx.throw(400);
+
+	// try {
+	// 	await auth(token);
+	// } catch (err) {
+	// 	ctx.throw(err);
+	// }
 
 	try {
 		if (!dbConnected) {
