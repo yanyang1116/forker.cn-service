@@ -7,7 +7,10 @@ import path from 'path';
 
 export default {
 	// 数据库连接地址
-	mongoHost: 'mongodb://localhost:27017/',
+	dockerMongohost: 'mongodb://localhost:27017/',
+
+	// docker 提供的静态服务的地址
+	dockerStaticHost: 'http://localhost:10010/',
 
 	// 应用的域名 host
 	host:

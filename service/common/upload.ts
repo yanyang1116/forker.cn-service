@@ -32,7 +32,7 @@ export default async (ctx: Koa.ParameterizedContext) => {
 		fs.writeFileSync(locationPath, buffer);
 		if (
 			shell.exec(
-				`docker cp ${locationPath} ${docker.nginxName}:${docker.nginxContentDir}`
+				`docker cp ${locationPath} ${docker.dbDockerName}:${docker.nginxContentDir}`
 			).code !== 0
 		) {
 			// 放心，这里的错误信息被 catch 捕捉后，也会正确的 200 -> '文件处理失败'，这么传递下去

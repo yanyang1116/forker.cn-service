@@ -4,7 +4,7 @@ import { MongoClient } from 'mongodb';
 import baseConfig from '@config/base';
 import auth from '@/utils/auth';
 
-const url = baseConfig.mongoHost;
+const url = baseConfig.dockerMongohost;
 const client = new MongoClient(url);
 const dbName = 'blog';
 const collectionName = 'LIST';

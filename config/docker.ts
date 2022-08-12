@@ -2,9 +2,9 @@
  * @file
  * docker 的相关配置
  */
-
+import base from './base';
 export default {
-	nginxName: 'nginx',
+	dbDockerName: 'db', // 这个 docker 是专门用来处理数据库和静态资源的
 	nginxContentDir: '/usr/share/nginx/html/',
 
 	/**
@@ -20,7 +20,5 @@ export default {
 	 * 用 docker cp 命令，现在本地临时写入文件夹，做文件夹移动
 	 */
 	nginxStaticServiceHost:
-		process.env.NODE_ENV === 'development'
-			? 'http://localhost:10010/'
-			: '/',
+		process.env.NODE_ENV === 'development' ? base.dockerStaticHost : '/',
 };

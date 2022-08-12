@@ -11,7 +11,7 @@ import baseConfig from '@config/base';
 import { EnumArticleStatus } from '@typing/enum';
 import auth from '@/utils/auth';
 
-const url = baseConfig.mongoHost;
+const url = baseConfig.dockerMongohost;
 const client = new MongoClient(url);
 const dbName = 'blog';
 const collectionName = 'CONTENT';

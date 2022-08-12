@@ -4,9 +4,9 @@
  */
 
 export default [
-	'/api/article/trashList',
-	'/api/common/upload',
-	'/api/article/status',
-	'/api/common/auth',
-	'/api/article/submit',
+	// '/api/article/trashList',
+	// '/api/common/upload',
+	// '/api/article/status',
+	// '/api/common/auth',
+	// '/api/article/submit',
 ];

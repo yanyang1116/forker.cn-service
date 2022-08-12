@@ -10,7 +10,7 @@ import secretInfo from '@config/secret';
 
 import baseConfig from '@config/base';
 
-const url = baseConfig.mongoHost;
+const url = baseConfig.dockerMongohost;
 const client = new MongoClient(url);
 const dbName = 'blog';
 const collectionName = 'USER';
