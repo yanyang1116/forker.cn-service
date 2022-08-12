@@ -1,0 +1,20 @@
+# 锁定 node 版本，TODO 怎么根据私有地址，或者国内源来提高初次下载速度
+FROM node:14.20.0
+
+LABEL MAINTAINER yy
+
+# 换 apt 源
+RUN sed -i s/deb.debian.org/mirrors.ustc.edu.cn/g /etc/apt/sources.list
+RUN apt-get clean
+
+RUN apt-get update -y
+RUN apt-get upgrade -y
+
+# 锁定 nginx 版本
+RUN apt-get install -y vim
+RUN apt-get clean
+
+# 仅仅是定义，和宿主机的 docker -p 11:11 是不一样的
+# https://yeasy.gitbook.io/docker_practice/image/dockerfile/expose
+# EXPOSE 10010
+# EXPOSE 27017

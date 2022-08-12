@@ -1,7 +1,6 @@
 # 锁定 mongodb 版本，TODO 怎么根据私有地址，或者国内源来提高初次下载速度
 FROM mongo:5.0.10
 
-
 LABEL MAINTAINER yy
 
 # 换 apt 源
