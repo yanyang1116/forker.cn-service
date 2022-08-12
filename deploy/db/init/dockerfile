@@ -1,0 +1,26 @@
+# 锁定 mongodb 版本，TODO 怎么根据私有地址，或者国内源来提高初次下载速度
+FROM mongo:5.0.10
+
+
+LABEL MAINTAINER yy
+
+# 换 apt 源
+RUN sed -i s/archive.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list && sed -i s/security.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list
+RUN apt-get clean
+
+RUN apt-get update -y
+RUN apt-get upgrade -y
+
+# 锁定 nginx 版本
+RUN apt-get install -y nginx=1.18.0-0ubuntu1.3
+RUN apt-get install -y vim
+RUN apt-get clean
+
+COPY ./forker.cn.static.conf /etc/nginx/conf.d/
+COPY ./shell/init.sh /home/
+COPY ./shell/init.js /home/
+
+# 仅仅是定义，和宿主机的 docker -p 11:11 是不一样的
+# https://yeasy.gitbook.io/docker_practice/image/dockerfile/expose
+EXPOSE 10010
+EXPOSE 27017
