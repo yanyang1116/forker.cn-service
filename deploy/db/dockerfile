@@ -23,3 +23,6 @@ COPY ./shell/init.js /home/
 # https://yeasy.gitbook.io/docker_practice/image/dockerfile/expose
 EXPOSE 10010
 EXPOSE 27017
+
+# 非常有用，定义容器启动时的开机程序，具体命令说的是 nginx 以前台程序运行（这个是 docker 推荐的做法）
+CMD ["nginx", "-g", "daemon off;"]

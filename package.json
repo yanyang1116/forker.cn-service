@@ -9,6 +9,8 @@
 		"lint:staged": "lint-staged",
 		"prettier": "prettier --write",
 		"dev": "export NODE_ENV=development && nodemon ./dist/index.js",
+		"build:prd": "export NODE_ENV=production && tsc",
+		"start": "node ./dist/index.js",
 		"tsc": "tsc --watch"
 	},
 	"lint-staged": {
