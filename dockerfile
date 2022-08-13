@@ -16,19 +16,21 @@ RUN apt-get upgrade -y
 RUN apt-get upgrade -y
 
 RUN apt-get install -y vim
+# 方便调试端口占用情况
+RUN apt-get install -y lsof
 RUN apt-get clean
-RUN npm run yarn -g
 
 WORKDIR /home/app/
 
-COPY ../../package.json /home/app/
+# 注意，宿主机路径，是以 dockerfile 所在路径为起点
+ADD package.json /home/app/
 
 # --no-optional   跳过可选包，有的时候 npm 会让我们选择更新一些旧的包
-# --production    避免安装开发依赖项
+# --production    避免安装开发依赖项，这个参数【不能加】
 # --verbose       打印详细信息
-RUN yarn --no-optional --production --verbose --registry https://registry.npmmirror.com
+RUN yarn --no-optional --verbose --registry https://registry.npmmirror.com
 
-COPY ../../ /home/app/
+COPY . /home/app/
 
 RUN yarn build:prd
 

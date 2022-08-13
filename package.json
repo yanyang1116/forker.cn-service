@@ -11,7 +11,8 @@
 		"dev": "export NODE_ENV=development && nodemon ./dist/index.js",
 		"build:prd": "export NODE_ENV=production && tsc",
 		"start": "node ./dist/index.js",
-		"tsc": "tsc --watch"
+		"tsc": "tsc --watch",
+		"build-tsc": "tsc"
 	},
 	"lint-staged": {
 		"*.{js,jsx,ts,tsx}": [],
