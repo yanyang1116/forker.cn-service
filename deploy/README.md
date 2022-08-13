@@ -2,7 +2,7 @@
 
 这个文件主要是对于数据库的初始化
 
-## 初始化
+## 创建容器
 
 > 数据库 docker 进行包括：mongo 以及由 ng 提供的静态资源服务
 
@@ -19,20 +19,29 @@ EXPOSE 27017 # mongo
 
 ---
 
-## 运行
+## 运行 part1
 
 1. 当 db docker 容器初始化好之后，db 容器就是真实的数据库了，操作要
    **【谨慎】【谨慎】【谨慎】**
 
-2. 运行 db 容器：docker run -d --name db-0812 forker/db:0812
-   建议用 db-日期，并且打上日期为主的 tag 方便管理（commit、迁移、备份）
+2. 运行 db 容器：`docker run -d --name db forker/db:v1`
+   建议用 db-日期，并且打上日期为主的 tag 方便管理（commit、迁移、备份）: `docker run -d --name db-0812 forker/db:v1`
+   注意，下文都用 db 来代替 db-0812 了，实际操作中，还是建议要加上【日期后缀】的
+   本地开发环境执行：
+   `docker run -d -p 10010:10010 -p 27017:27017 --name db forker/db:v1`
 
-3. ~~ `docker exec -it db-0812 nginx` ~~
-   ~~务必要执行一次，才能开启 db 容器中的 ng~~
-   使用了 `CMD` ，容器启动时可以自动启动 ng 了
+## 初始化数据
 
-4. `docker exec -it db-0812 bash` 进入容器控制台进行
+运行命令，完成初始化
+`docker exec -it db mongo 127.0.0.1:27017 /home/init.js`
 
-5. `docker stop db-0812` 关闭容器
+## 运行 part2
 
-6. `docker start db-0812` 重启开启容器
+1. ~~本来是想用 `CMD` 来自启动 ng 的，不过试了下会和 mongo 的自启动有冲突~~
+   务必要执行一次，才能开启 db 容器中的 ng：`docker exec -it db nginx`
+
+2. `docker exec -it db bash` 进入容器控制台进行
+
+3. `docker stop db` 关闭容器
+
+4. `docker start db` 重启开启容器

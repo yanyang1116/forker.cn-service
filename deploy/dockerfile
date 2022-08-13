@@ -24,5 +24,5 @@ COPY ./shell/init.js /home/
 EXPOSE 10010
 EXPOSE 27017
 
-# 非常有用，定义容器启动时的开机程序，具体命令说的是 nginx 以前台程序运行（这个是 docker 推荐的做法）
-CMD ["nginx", "-g", "daemon off;"]
+# 这个指令会和 mongo 的自自启动有冲突，先暂时不用了
+# CMD ["nginx", "daemon off;"]
