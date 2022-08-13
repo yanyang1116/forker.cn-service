@@ -8,7 +8,7 @@ import { MongoClient } from 'mongodb';
 import { customAlphabet } from 'nanoid';
 
 import baseConfig from '@config/base';
-import { EnumArticleStatus } from '@typing/enum';
+import { EnumArticleStatus } from '@typing/global.enum';
 import auth from '@/utils/auth';
 
 const url = baseConfig.dockerMongohost;

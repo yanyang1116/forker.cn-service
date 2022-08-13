@@ -9,7 +9,7 @@
  */
 
 import { InferIdType } from 'mongodb';
-import { EnumArticleStatus } from '@typing/enum';
+import { EnumArticleStatus } from '@typing/global.enum';
 declare global {
 	type IResponseBody<T> =
 		| undefined
