@@ -17,7 +17,8 @@ import alias from './utils/alias';
 alias();
 
 import appRoutes from '@controller/router';
-import proxyConfig, { corsOrigin as corsOriginConfig } from '@config/proxy';
+import proxyConfig from '@config/proxy';
+// import corsOriginConfig from '@config/cors';
 import reqProxy from '@middleware/reqProxy';
 import auth from '@middleware/auth';
 
@@ -25,19 +26,7 @@ const app = new Koa();
 const router = new Router({ prefix: '/api' });
 appRoutes(router);
 
-// TODO，这个没试过，要和前端联调一下才能确认是否能工作
-app.use(
-	cors({
-		credentials: true,
-		origin(ctx: Koa.ParameterizedContext) {
-			if (corsOriginConfig.includes(ctx.host)) {
-				return true;
-			} else {
-				return false;
-			}
-		},
-	})
-);
+if (process.env.NODE_ENV === 'development') app.use(cors());
 
 app.use(reqProxy(proxyConfig));
 

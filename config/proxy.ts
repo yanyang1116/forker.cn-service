@@ -21,13 +21,3 @@ export default {
 		},
 	},
 };
-
-let _corsOrigin: string[] = [];
-
-if (process.env.NODE_ENV === 'development') {
-	_corsOrigin = ['localhost:5173'];
-} else {
-	_corsOrigin = [];
-}
-
-export const corsOrigin = _corsOrigin;

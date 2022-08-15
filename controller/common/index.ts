@@ -1,6 +1,6 @@
 import Router from 'koa-router';
 
-import { login, upload, pv, auth } from '@service/common/index';
+import { login, upload, pv, authStatus } from '@service/common/index';
 import wrapRes from '@utils/responseFormat';
 // @koa/multer 包的申明文件有 Koa 有冲突，我这里在 declarations.d.ts 里单独声明了，至于是否可以修复，之后可以研究 TODO
 import multer from '@koa/multer';
@@ -34,10 +34,10 @@ export default (router: Router) => {
 		next();
 	});
 
-	router.get('/common/auth', async (ctx, next) => {
+	router.get('/common/authStatus', async (ctx, next) => {
 		let data: any = null;
 		try {
-			data = await auth(ctx);
+			data = await authStatus(ctx);
 		} catch (err) {
 			wrapRes.wrapFail(ctx, err);
 			next();
