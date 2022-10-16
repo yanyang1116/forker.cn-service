@@ -20,7 +20,7 @@
 		 */
 		"baseUrl": "./",
 		"paths": {
-			// 别名路劲，会以 baseUrl 开始找
+			// 别名，会以 baseUrl 开始找
 			"@controller/*": ["./controller/*"],
 			"@middleware/*": ["./middleware/*"],
 			"@service/*": ["./service/*"],

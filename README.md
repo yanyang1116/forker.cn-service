@@ -4,6 +4,11 @@ service for forker.cn
 
 ## 记录
 
+跑起来：
+
+1. yarn tsc 开始监听变化
+2. 先 yarn start 开始运行
+
 ### koa 封装了很好的 throw、catch，以后有机会也要搞一个
 
 koa 上下文中 ctx.throw，是可以被下文 catch 到的
