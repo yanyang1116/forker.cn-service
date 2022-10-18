@@ -1,6 +1,12 @@
 import Router from 'koa-router';
 
-import { login, upload, pv, authStatus, behavior } from '@service/common/index';
+import {
+	login,
+	upload,
+	pv,
+	authStatus,
+	breakPointUpload,
+} from '@service/common/index';
 import wrapRes from '@utils/responseFormat';
 // @koa/multer 包的申明文件有 Koa 有冲突，我这里在 declarations.d.ts 里单独声明了，至于是否可以修复，之后可以研究 TODO
 import multer from '@koa/multer';
@@ -47,10 +53,10 @@ export default (router: Router) => {
 		next();
 	});
 
-	router.post('/common/behavior', async (ctx, next) => {
+	router.post('/common/breakPointUpload', async (ctx, next) => {
 		let data: any = null;
 		try {
-			data = await behavior(ctx);
+			data = await breakPointUpload(ctx);
 		} catch (err) {
 			wrapRes.wrapFail(ctx, err);
 			next();
@@ -60,10 +66,10 @@ export default (router: Router) => {
 		next();
 	});
 
-	router.get('/common/behavior', async (ctx, next) => {
+	router.get('/common/breakPointUpload', async (ctx, next) => {
 		let data: any = null;
 		try {
-			data = await behavior(ctx);
+			data = await breakPointUpload(ctx);
 		} catch (err) {
 			wrapRes.wrapFail(ctx, err);
 			next();
