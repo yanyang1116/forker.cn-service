@@ -15,7 +15,6 @@ const wrapFail = (ctx: Koa.ParameterizedContext, err: any) => {
 		ctx.status = 200;
 		return;
 	}
-
 	// 直接抛出状态码的处理
 	if (err.__proto__.status !== 500) {
 		ctx.status = err.__proto__.status;

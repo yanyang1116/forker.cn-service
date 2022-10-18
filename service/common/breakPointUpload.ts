@@ -16,6 +16,7 @@ import { Buffer } from 'node:buffer';
 import docker from '@config/docker';
 import shell from 'shelljs';
 
+import dataURLtoBlob from '@utils/dataURLtoBlob';
 import baseConfig from '@config/base';
 
 export default async (ctx: Koa.ParameterizedContext) => {
@@ -195,13 +196,8 @@ export default async (ctx: Koa.ParameterizedContext) => {
 	 * 3. 保存切片
 	 * 4. 当所有切片都保存完成，合成文件、加上后缀名，移动到文件外，删除文件夹，返回所有都保存完成
 	 */
-	const { id, content, suffix, section } = ctx.request.body;
-	let { sections } = ctx.request.body;
-	try {
-		sections = JSON.parse(sections);
-	} catch (ctx) {
-		ctx.throw(400);
-	}
+	const { sections, id, suffix, section } = ctx.request.body;
+	let { content } = ctx.request.body;
 	if (
 		!id ||
 		!content ||
@@ -214,7 +210,6 @@ export default async (ctx: Koa.ParameterizedContext) => {
 	) {
 		ctx.throw(400);
 	}
-
 	checkedOutDir();
 
 	// 没有，用 id 作为主键创建文件夹
@@ -275,32 +270,35 @@ export default async (ctx: Koa.ParameterizedContext) => {
 
 	// 写文件，在宿主机写，然后走 copy
 	const locationPath = path.join(baseConfig.tempDir, `./${section}.temp`);
+	content = dataURLtoBlob(content);
 
-	// TODO 看这里有可能会出错，这个TODO 验证完删除
-	// TODO
-	// TODO
-	// TODO
+	/**
+	 * promise then 中的 return 是这个 promise 最终的 resolve 值
+	 * 这里只需要 return koa 路由会根据 return 的是 value 或者 Promise<value> 做处理
+	 */
 	return content.arrayBuffer().then((res: ArrayBuffer) => {
-		debugger;
 		const _content = Buffer.from(res);
-		console.log(_content, 7689);
 		fs.writeFileSync(locationPath, _content);
 		// 同步到容器
 		if (
 			shell.exec(
-				`docker cp ${locationPath} ${docker.dbDockerName}:${docker.nginxContentDir}${id}`
+				`docker cp ${locationPath} ${docker.dbDockerName}:${docker.nginxContentDir}breakpoint_resume_temp/${id}`
 			).code !== 0
 		) {
 			// 放心，这里的错误信息被 catch 捕捉后，也会正确的 200 -> '文件处理失败'，这么传递下去
 			ctx.throw(200, '文件处理执行失败');
 		}
-
 		if (statusStdoutArr.length + 1 === sections.length)
-			mergeFile(statusStdoutArr);
-
+			mergeFile([...statusStdoutArr, section]);
 		return {
 			finished: statusStdoutArr.length + 1 === sections.length,
-			section,
+			url: `${baseConfig.host}s/${id}.${
+				suffix.startsWith('.') ? suffix.substr(1) : suffix
+			}`,
+			section:
+				statusStdoutArr.length + 1 === sections.length
+					? undefined
+					: section,
 		};
 	});
 };
